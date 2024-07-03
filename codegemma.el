@@ -3,16 +3,16 @@
 (defun mlemosf/insert-control-structures (prompt)
   "Insere as estruturas especiais do CodeGemma"
   (let (
-		(preffix "<|fim_preffix|>")
+		(preffix "<|fim_prefix|>")
 		(suffix "<|fim_suffix|>")
 		(middle "<|fim_middle|>")
 		)
-	(format "%s%s%s%s" preffix prompt suffix middle)))
+	(format "%s%s%s%s" prefix prompt suffix middle)))
 
 (defun mlemosf/gemma-remove-control-structures (response)
   "Remove estruturas de controle após geração"
   (let (
-		(regex "\\(\<|f\\(im\\|ile\\)_\\(preffix\\|suffix\\|middle\\|separator\\)|>\\)")
+		(regex "\\(\<|f\\(im\\|ile\\)_\\(prefix\\|suffix\\|middle\\|separator\\)|>\\)")
 		)
 	(car (split-string response regex))))
 
@@ -25,7 +25,7 @@
 		   :sync t
 		   :data (json-encode `(
 								("prompt" . ,prompt)
-								("n_predict" . 1024)
+								("n_predict" . 512)
 								("temperature" . 0.8)
 								))
 		   :parser 'json-read
